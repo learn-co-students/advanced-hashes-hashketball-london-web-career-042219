@@ -121,10 +121,55 @@ def big_shoe_rebounds
 end
 
 def most_points_scored
-  #The number of points scored method return an integer if given a name
-  #iterate over an array of player names (.keys) passing tthem to num_points_scored
-  #use .each_with_index to store the index of the highest scorer
+  players = []
+  most = 0
+  leader = ""
+
+  game_hash.each{ |location, team_data|
+    players << game_hash[location][:players].keys
+  }
+
+  players = players.flatten
+
+  players.each_with_index {|player,i|
+      if num_points_scored(player) > most
+        most = num_points_scored(player)
+        leader = players[i]
+      end
+  }
+leader
 end
+
+def winning_team
+  #add up the points of each player in team 1 and team 2
+  totalHome = 0
+  totalAway = 0
+  game_hash.each {|location,team_data|
+    team_data.each {|attribute, data|
+      if attribute == :players
+        data.each {|name,hash|
+          if location == :home
+            totalHome += game_hash[location][attribute][name][:points]
+          else
+            totalAway += game_hash[location][attribute][name][:points]
+          end
+        }
+      end
+    }
+  }
+  if totalHome > totalAway
+    return game_hash[:home][:team_name]
+  else
+    return game_hash[:away][:team_name]
+  end
+end
+
+def player_with_longest_name
+end
+
+def long_name_steals_a_ton?
+end
+
 
 
 
