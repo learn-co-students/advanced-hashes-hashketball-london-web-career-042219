@@ -165,9 +165,42 @@ def winning_team
 end
 
 def player_with_longest_name
+  max = 0
+  longest = ""
+  players = []
+  game_hash.each{|location, team_data|
+    players << game_hash[location][:players].keys
+  }
+  players = players.flatten
+
+  players.each {|name|
+    if name.length > max
+      longest = name
+    end
+  }
+  longest
 end
 
 def long_name_steals_a_ton?
+  maxSteal = 0
+  longest = player_with_longest_name
+  x = ""
+
+  game_hash.each {|location,team_data|
+    team_data.each {|attribute, data|
+      if attribute == :players
+        data.each {|name,hash|
+          hash.each{|stat,number|
+            if hash[:steals] > maxSteal
+              maxSteal = hash[:steals]
+              x= name.to_s
+            end
+          }
+        }
+      end
+    }
+   }
+   player_with_longest_name == x
 end
 
 
