@@ -1,3 +1,5 @@
+#binding.pry
+
 require_relative '../hashketball'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
